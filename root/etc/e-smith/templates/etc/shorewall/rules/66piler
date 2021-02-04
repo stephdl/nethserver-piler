@@ -1,0 +1,5 @@
+?COMMENT piler
+ACCEPT	aqua	$FW	tcp	389
+ACCEPT	aqua	$FW	tcp	636
+ACCEPT	aqua	$FW	tcp	993
+ACCEPT	aqua	$FW	tcp	995

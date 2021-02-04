@@ -1,0 +1,82 @@
+# 
+# Virtual Host piler.{$DomainName} - *:443
+# Description : 
+
+<VirtualHost *:443>
+
+    ServerName piler.{$DomainName}
+
+    # Start Rewrite Engine
+    RewriteEngine On
+
+    # forcessl_redirect
+    RewriteCond %\{HTTPS\} !=on
+    RewriteRule (.*) https://%\{SERVER_NAME\}$1 [R,L]
+
+    #20ssl_engine
+    SSLEngine On
+
+    SSLProxyVerify none
+    SSLProxyCheckPeerCN off
+    SSLProxyCheckPeerName off
+    SSLProxyCheckPeerExpire off
+
+    # Reverse Proxy (with exclusion of local Letsencrypt challenge path)
+    ProxyPassMatch ^/.well-known/acme-challenge/ !
+
+    # Websockets proxypass
+    RewriteCond %\{HTTP:Upgrade\} websocket [NC]
+    RewriteCond %\{HTTP:Connection\} upgrade [NC]
+    RewriteRule .* ws://172.28.101.4%\{REQUEST_URI\} [P,L]
+
+    ProxyPass  / http://172.28.101.4/ max=3 retry=30
+    ProxyPassReverse / http://172.28.101.4/
+   ProxyPreserveHost On
+
+    <Location "/">
+      <RequireAll>
+        Require all granted
+        SSLRequireSSL
+      </RequireAll>
+    </Location>
+
+</VirtualHost>
+
+
+# 
+# Virtual Host piler.{$DomainName} - *:80
+# Description : 
+
+<VirtualHost *:80>
+
+    ServerName piler.{$DomainName}
+
+    # Start Rewrite Engine
+    RewriteEngine On
+
+    # forcessl_redirect
+    RewriteCond %\{HTTPS\} !=on
+    RewriteRule (.*) https://%\{SERVER_NAME\}$1 [R,L]
+
+
+
+    # Reverse Proxy (with exclusion of local Letsencrypt challenge path)
+    ProxyPassMatch ^/.well-known/acme-challenge/ !
+
+    # Websockets proxypass
+    RewriteCond %\{HTTP:Upgrade\} websocket [NC]
+    RewriteCond %\{HTTP:Connection\} upgrade [NC]
+    RewriteRule .* ws://172.28.101.4%\{REQUEST_URI\} [P,L]
+
+    ProxyPass  / http://172.28.101.4/ max=3 retry=30
+    ProxyPassReverse / http://172.28.101.4/
+   ProxyPreserveHost On
+
+    <Location "/">
+      <RequireAll>
+        Require all granted
+        SSLRequireSSL
+      </RequireAll>
+    </Location>
+
+</VirtualHost>

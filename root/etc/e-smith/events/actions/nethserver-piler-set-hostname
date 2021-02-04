@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#
+# Set the Hostname definition of piler
+#
+/usr/sbin/e-smith/db hosts set piler.$(config get DomainName) remote IpAddress 172.28.101.4 Description 'Piler docker hostname' WildcardMode disabled

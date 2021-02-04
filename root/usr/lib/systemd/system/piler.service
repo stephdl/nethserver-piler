@@ -1,0 +1,11 @@
+[Unit]
+Description=docker service to manage piler container
+After=network.target docker.service
+
+[Service]
+Restart=on-failure
+ExecStart=/usr/libexec/nethserver/piler-docker-management start
+ExecStop=/usr/libexec/nethserver/piler-docker-management stop
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ACTION=$1
+PathConfYML=/usr/share/piler/docker-compose.yaml
+
+if [[ $ACTION == 'start' ]];then
+    /usr/share/piler/docker-compose -f $PathConfYML up
+elif [[ $ACTION == 'stop' ]];then
+    /usr/share/piler/docker-compose -f $PathConfYML stop
+elif [[ $ACTION == 'pull' ]];then
+    /usr/share/piler/docker-compose -f $PathConfYML pull
+fi
