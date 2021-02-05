@@ -23,6 +23,7 @@ event_templates($event, qw(
 
  event_services($event, qw(
                 httpd reload
+                dnsmasq restart
  ));
 
 safe_symlink("/etc/e-smith/templates-default/template-begin-php", 
