@@ -1,0 +1,3 @@
+/var/lib/docker/volumes/piler_db_data
+/var/lib/docker/volumes/piler_piler_var
+/var/lib/docker/volumes/piler_piler_etc/
