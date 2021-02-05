@@ -1,8 +1,6 @@
-<?php
-
 define('SITE_NAME_CONST', 'SITE_NAME');
 
-$config[SITE_NAME_CONST] = 'archive.piler.local';
+$config[SITE_NAME_CONST] = 'piler.{$DomainName}';
 $config['SITE_URL'] = 'http://' . $config[SITE_NAME_CONST] . '/';
 
 $config['SMTP_DOMAIN'] = $config[SITE_NAME_CONST];
@@ -15,7 +13,11 @@ $config['DECRYPT_BINARY'] = '/usr/bin/pilerget';
 $config['DECRYPT_ATTACHMENT_BINARY'] = '/usr/bin/pileraget';
 $config['PILER_BINARY'] = '/usr/sbin/piler';
 $config['DB_HOSTNAME'] = 'mysql';
-$config['DB_PASSWORD'] = 'piler123';
+{
+use NethServer::Password;
+my $MysqlPilerPassword = NethServer::Password::store('PilerMysqlUserPassword') || die('Could not generate PilerMysqlUserPassword password!');
+$OUT.="\$config['DB_PASSWORD'] = '$MysqlPilerPassword';\n";
+}
 $config['ENABLE_MEMCACHED'] = 1;
 $memcached_server = ['memcached', 11211];
 
@@ -23,6 +25,6 @@ $config['ENABLE_IMAP_AUTH'] = 1;
 $config['RESTORE_OVER_IMAP'] = 1;
 $config['IMAP_RESTORE_FOLDER_INBOX'] = 'INBOX';
 $config['IMAP_RESTORE_FOLDER_SENT'] = 'Sent';
-$config['IMAP_HOST'] = 'archive.piler.local';
+$config['IMAP_HOST'] = '{$SystemName.'.'.$DomainName}';
 $config['IMAP_PORT'] =  993;
 $config['IMAP_SSL'] = true;

@@ -59,6 +59,7 @@ rm -rf  %SOURCE1-%{composeVersion}
 # %dir %attr(0755,root,root) /var/lib/docker/volumes/piler_piler_etc/_data/
 %attr(0755,root,root) /usr/share/piler/docker-compose
 %attr(0755,root,root) /usr/libexec/nethserver/piler-docker-management
+%attr(0755,root,root) /usr/libexec/nethserver/nethserver-piler-expand-template
 %doc COPYING
 
 %changelog

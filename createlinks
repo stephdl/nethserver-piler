@@ -20,90 +20,10 @@ event_templates($event, qw(
      /etc/hosts
      /etc/httpd/conf.d/zzz_piler.conf
 ));
-     # /var/lib/docker/volumes/piler_piler_etc/_data/config-site.php
 
  event_services($event, qw(
                 httpd reload
  ));
-               #  piler restart
 
-#  safe_symlink("/etc/e-smith/templates-default/template-begin-php", "root/var/lib/docker/volumes/piler_piler_etc/_data/config-site.php");
-#example 1
-
-#launch several actions following one event
-# number < 10 -> action start before template expand
-# number < 90 -> action start after template expansion
-# number > 90 < 100 -> action starts after the service restart
-# event_actions($event, qw(
-#              nethserver-virtualhosts-create 20
-#              nethserver-virtualhosts-setbasicpassword 30
-#              nethserver-virtualhosts-ftp-save 60
-# ));
-# #expand templates following one event
-# event_templates($event, qw(
-#                 /etc/httpd/conf.d/virtualhosts.conf
-#                 /etc/Other/Path
-# ));
-# #restart services following one event
-# event_services($event, qw(
-#                httpd reload
-#                otherservice restart
-# ));
-
-
-
-#example2 when you have several events with several 
-#templates,actions,services to manage
-
-
-#templates expand following several events
-# foreach (qw(sysconfig/nfs exports /etc/otherPath /other/path))
-# {
-#     templates2events("/etc/$_", qw(
-#     nethserver-nfs-update
-#     other-event-name
-#     event-name
-#     ));
-# }
-
-# #Template to expand following several events
-# foreach (qw(exports))
-# {
-#     templates2events("/etc/$_", qw(
-#     interface-update
-#     ibay-create
-#     ibay-delete
-#     ibay-modify
-#     ));
-# }
-
-# #it could be also
-# templates2events("/etc/exports",qw(
-#     interface-update
-#     ibay-create
-#     ibay-delete
-#     ibay-modify
-#     ));
-
-
-
-# #restart services following one event
-# foreach $event (qw(nethserver-nfs-update))
-# {
-#     event_services($event,
-#         'nfs-lock' => 'restart', 
-#         'nfs' => 'restart',
-#         'rpcbind' => 'restart' );
-# }
-
-
-# #launch an action following several events
-# # number < 10 -> action start before template expand
-# # number < 90 -> action start after template expansion
-# # number > 90 < 100 -> action starts after the service restart
-
-# for $event (qw(nethserver-nfs-update interface-update ibay-create ibay-delete ibay-modify))
-# {
-#     event_actions ($event, 'nethserver-name-Action' => '95');
-#     event_actions ($event, 'nethserver-Other-Action' => '95');
-# }
+safe_symlink("/etc/e-smith/templates-default/template-begin-php", 
+     "root/etc/e-smith/templates/var/lib/docker/volumes/piler_piler_etc/_data/config-site.php/template-begin");

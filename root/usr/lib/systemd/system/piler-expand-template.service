@@ -1,0 +1,6 @@
+[Unit]
+Description=docker service to manage piler expand-template
+After=piler.service
+
+[Service]
+ExecStart=/usr/libexec/nethserver/nethserver-piler-expand-template
