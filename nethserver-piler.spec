@@ -61,6 +61,7 @@ rm -rf  %SOURCE1-%{composeVersion}
 %attr(0755,root,root) /usr/libexec/nethserver/piler-docker-management
 %attr(0755,root,root) /usr/libexec/nethserver/nethserver-piler-expand-template
 %attr(0755,root,root) /usr/bin/piler
+%attr(0755,root,root) /usr/bin/piler-import-email
 %doc COPYING
 
 %changelog

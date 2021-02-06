@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+# Import email from the NethServer host running docker
+#
+
+DOMAIN=$(config get DomainName)
+SYSTEMNAME=$(config get SystemName)
+PWD=$(cat /var/lib/nethserver/secrets/vmail)
+
+for entry in "/var/lib/nethserver/vmail"/*
+do
+    USER=$(basename $entry)
+    [[ $USER =~ ^(vmail|shared-mailboxes.db)$ ]] && continue
+
+    printf "#\n#\n# Importing $USER\n#\n#\n"
+
+    /usr/bin/docker exec piler_piler_1 /bin/bash  -c "su - piler;cd /var/piler/imap;/usr/bin/pilerimport -i $SYSTEMNAME.$DOMAIN  -u $USER*vmail -p  $PWD  -P 993"
+done
