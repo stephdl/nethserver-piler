@@ -64,5 +64,6 @@ rm -rf  %SOURCE1-%{composeVersion}
 %doc COPYING
 
 %changelog
-* Tue May 09 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
+* Sat fev 06 2021 stephane de Labrusse <stephdl@de-labrusse.fr>
 - initial
+- Fosdem 21 I miss you
