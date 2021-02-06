@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+
+if [[ $1 == 'status' ]]; then
+    echo "# piler_piler_1 status"
+    docker inspect -f "{{.State.Health.Status}}" piler_piler_1
+    echo "# piler_mysql_1 status"
+    docker inspect -f "{{.State.Health.Status}}" piler_mysql_1
+    echo "# piler_memcached_1 status"
+    docker inspect -f "{{.State.Health.Status}}" piler_memcached_1
+elif [[ $1 == 'stop' ]]; then
+    echo "# piler stop"
+    /usr/bin/systemctl stop piler
+elif [[ $1 == 'log' ]]; then
+    echo "### piler_piler_1 logs"
+    docker logs piler_piler_1
+    echo "### piler_mysql_1 logs"
+    docker logs piler_mysql_1
+    echo "### piler_memcached_1 logs"
+    docker logs piler_memcached_1
+elif [[ $1 == 'ps' ]]; then
+    echo "# piler container ps"
+    docker ps | grep piler
+elif [[ $1 == 'start' ]]; then
+    echo "# piler start"
+    /usr/bin/systemctl start piler
+elif [[ $1 == 'restart' ]]; then
+    echo "# piler restart"
+    /usr/bin/systemctl restart piler
+elif [[ $1 == 'bash' ]]; then
+    docker exec -ti piler_piler_1 /bin/bash
+else
+    echo "The commands are :
+    piler status : retrieve the status of piler container
+    piler bash : start a shell inside the container
+    piler restart: Restart the piler container
+    piler start: Start the piler container
+    piler stop: Stop the piler container
+    piler ps: Container information
+    piler log: Display the error log of the container
+"
+fi
