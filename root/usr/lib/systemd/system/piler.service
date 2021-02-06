@@ -2,6 +2,7 @@
 Description=docker service to manage piler container
 After=network.target docker.service
 Wants=piler-expand-template.service
+PartOf=docker.service
 
 [Service]
 Restart=on-failure
