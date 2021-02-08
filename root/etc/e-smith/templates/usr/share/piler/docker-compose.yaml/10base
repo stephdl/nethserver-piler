@@ -1,6 +1,5 @@
 {
 use NethServer::Password;
-my $MysqlRootPassword = NethServer::Password::store('PilerMysqlRootPassword') || die('Could not generate PilerMysqlRootPassword password!');
 my $MysqlPilerPassword = NethServer::Password::store('PilerMysqlUserPassword') || die('Could not generate PilerMysqlUserPassword password!');
 
 $OUT .= qq(
@@ -17,7 +16,11 @@ services:
       - setuid
       - setgid
     environment:
-      - MYSQL_ROOT_PASSWORD=$MysqlRootPassword
+      - MYSQL_DATABASE=piler
+      - MYSQL_USER=piler
+      - MYSQL_PASSWORD=$MysqlPilerPassword
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -37,8 +40,9 @@ services:
     image: sutoj/piler:1.3.10
     init: true
     environment:
-      - MYSQL_PILER_PASSWORD=$MysqlPilerPassword
-      - MYSQL_ROOT_PASSWORD=$MysqlRootPassword
+      - MYSQL_DATABASE=piler
+      - MYSQL_USER=piler
+      - MYSQL_PASSWORD=$MysqlPilerPassword
       - MYSQL_HOSTNAME=mysql
       - PILER_HOSTNAME=piler.$DomainName
       - MEMCACHED_HOST=memcached
