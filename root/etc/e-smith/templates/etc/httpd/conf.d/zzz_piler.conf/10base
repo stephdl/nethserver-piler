@@ -1,10 +1,10 @@
-# 
-# Virtual Host piler.{$DomainName} - *:443
-# Description : 
+#
+# Virtual Host {$piler{'Vhost'} || piler.'.'.$DomainName} - *:443
+# Description :
 
 <VirtualHost *:443>
 
-    ServerName piler.{$DomainName}
+    ServerName {$piler{'Vhost'} || piler.'.'.$DomainName}
 
     # Start Rewrite Engine
     RewriteEngine On
@@ -43,13 +43,13 @@
 </VirtualHost>
 
 
-# 
-# Virtual Host piler.{$DomainName} - *:80
-# Description : 
+#
+# Virtual Host {$piler{'Vhost'} || piler.'.'.$DomainName}- *:80
+# Description :
 
 <VirtualHost *:80>
 
-    ServerName piler.{$DomainName}
+    ServerName {$piler{'Vhost'} || piler.'.'.$DomainName}
 
     # Start Rewrite Engine
     RewriteEngine On
