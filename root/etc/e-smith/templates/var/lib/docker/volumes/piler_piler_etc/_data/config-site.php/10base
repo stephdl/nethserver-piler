@@ -28,3 +28,5 @@ $config['IMAP_RESTORE_FOLDER_SENT'] = 'Sent';
 $config['IMAP_HOST'] = '{$SystemName.'.'.$DomainName}';
 $config['IMAP_PORT'] =  993;
 $config['IMAP_SSL'] = true;
+
+$config['CAPTCHA_FAILED_LOGIN_COUNT'] = 3;
