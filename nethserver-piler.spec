@@ -1,4 +1,4 @@
-Summary: nethserver-piler  is a skeleton for a new module
+Summary: nethserver-piler  is a rpm for mailpiler software
 %define name nethserver-piler
 Name: %{name}
 %define version 0.1.0
@@ -8,6 +8,7 @@ Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+# rm docker-compose-Linux-x86_64 for version upgrade
 %define composeVersion 1.28.2
 Source1: https://github.com/docker/compose/releases/download/%{composeVersion}/docker-compose-Linux-x86_64
 Requires: nethserver-docker
@@ -16,32 +17,20 @@ BuildRequires: nethserver-devtools
 BuildArch: x86_64
 
 %description
-skeleton for a new module
-
-
+Piler is a feature rich open source email archiving solution
 
 %prep
-mv %SOURCE1 %SOURCE1-%{composeVersion}
 %setup
 
 %build
-# %{makedocs}
 perl createlinks
 
 %install
-
-
-
 rm -rf $RPM_BUILD_ROOT
 (cd root   ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-%{release}-filelist
-# Temp directory
-# cd ../
 mkdir -p %{buildroot}/usr/share/piler/
-# mkdir -p %{buildroot}/var/lib/docker/volumes/piler_piler_etc/_data/
-
-# install -d -m 755 %{buildroot}%{_datadir}/%{version}.tar.gz
-mv %SOURCE1-%{composeVersion} %{buildroot}%{_datadir}/piler/docker-compose
+mv %SOURCE1 %{buildroot}%{_datadir}/piler/docker-compose
 
 %{genfilelist} $RPM_BUILD_ROOT \
 > %{name}-%{version}-%{release}-filelist
@@ -49,14 +38,12 @@ mv %SOURCE1-%{composeVersion} %{buildroot}%{_datadir}/piler/docker-compose
 %post
 %postun
 
-%clean 
+%clean
 rm -rf $RPM_BUILD_ROOT
-rm -rf  %SOURCE1-%{composeVersion}
 
 %files -f %{name}-%{version}-%{release}-filelist
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
-# %dir %attr(0755,root,root) /var/lib/docker/volumes/piler_piler_etc/_data/
 %attr(0755,root,root) /usr/share/piler/docker-compose
 %attr(0755,root,root) /usr/libexec/nethserver/piler-docker-management
 %attr(0755,root,root) /usr/libexec/nethserver/nethserver-piler-expand-template
