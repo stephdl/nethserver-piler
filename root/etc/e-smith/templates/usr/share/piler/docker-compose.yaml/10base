@@ -7,7 +7,7 @@ version: "3"
 services:
 
   mysql:
-    image: mariadb:10.4
+    image: mariadb:10.5
     restart: unless-stopped
     cap_drop:
       - ALL
@@ -21,6 +21,12 @@ services:
       - MYSQL_PASSWORD=$MysqlPilerPassword
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: mysql --user=piler --password=$MysqlPilerPassword piler --execute "show tables"
+      interval: "60s"
+      timeout: "5s"
+      start_period: "15s"
+      retries: 3
     volumes:
       - db_data:/var/lib/mysql
     networks:
