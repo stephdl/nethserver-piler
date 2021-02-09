@@ -45,7 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %attr(0755,root,root) /usr/share/piler/docker-compose
-%attr(0755,root,root) /usr/libexec/nethserver/piler-docker-management
+%attr(0755,root,root) /usr/libexec/nethserver/nethserver-piler-docker-management
 %attr(0755,root,root) /usr/libexec/nethserver/nethserver-piler-expand-template
 %attr(0755,root,root) /usr/bin/piler
 %attr(0755,root,root) /usr/bin/piler-import-email

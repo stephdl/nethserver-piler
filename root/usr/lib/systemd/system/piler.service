@@ -6,8 +6,8 @@ PartOf=docker.service
 
 [Service]
 Restart=on-failure
-ExecStart=/usr/libexec/nethserver/piler-docker-management start
-ExecStop=/usr/libexec/nethserver/piler-docker-management stop
+ExecStart=/usr/libexec/nethserver/nethserver-piler-docker-management start
+ExecStop=/usr/libexec/nethserver/nethserver-piler-docker-management stop
 
 [Install]
 WantedBy=multi-user.target
