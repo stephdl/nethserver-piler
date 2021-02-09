@@ -3,11 +3,11 @@
 #
 # Import email from the NethServer host running docker
 #
-
 DOMAIN=$(config get DomainName)
 SYSTEMNAME=$(config get SystemName)
 PWD=$(cat /var/lib/nethserver/secrets/vmail)
 
+if [[ $1 == '-a' ]]; then
 for entry in "/var/lib/nethserver/vmail"/*
 do
     USER=$(basename $entry)
@@ -17,3 +17,18 @@ do
 
     /usr/bin/docker exec piler_piler_1 /bin/bash  -c "su - piler;cd /var/piler/imap;/usr/bin/pilerimport -i $SYSTEMNAME.$DOMAIN  -u $USER*vmail -p  $PWD  -P 993"
 done
+elif [[ $1 == '-l' ]]; then
+    /usr/bin/ls /var/lib/nethserver/vmail/| grep $DOMAIN
+elif [[ $1 == '-u' ]]; then
+    for USER in $(echo $2 | tr "," "\n")
+    do
+        printf "#\n#\n# Importing $USER\n#\n#\n"
+        /usr/bin/docker exec piler_piler_1 /bin/bash  -c "su - piler;cd /var/piler/imap;/usr/bin/pilerimport -i $SYSTEMNAME.$DOMAIN  -u $USER*vmail -p  $PWD  -P 993"
+    done
+else
+    echo "The commands are :
+    -a : import all accounts
+    -l : list all accounts of the server
+    -u account : import all email of a list of users(comma separated : user1,user2)
+    "
+fi
