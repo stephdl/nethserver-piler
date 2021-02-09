@@ -10,3 +10,6 @@ do
 done
 
 /usr/sbin/e-smith/expand-template /var/lib/docker/volumes/piler_piler_etc/_data/config-site.php
+/usr/sbin/e-smith/expand-template /var/lib/docker/volumes/piler_piler_etc/_data/piler.conf
+
+/usr/bin/systemctl restart piler
