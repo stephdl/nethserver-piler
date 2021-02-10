@@ -20,8 +20,62 @@ $OUT.="\$config['DB_PASSWORD'] = '$MysqlPilerPassword';\n";
 }
 $config['ENABLE_MEMCACHED'] = 1;
 $memcached_server = ['memcached', 11211];
+{
+    if ( $piler{'Authentication'} eq 'imap') {
+        $OUT .= qq(
+\$config['ENABLE_IMAP_AUTH'] = 1;
+);
+    } elsif ($piler{'Authentication'} eq 'ldap') {
+        use NethServer::SSSD;
+        my $sssd = new NethServer::SSSD();
+        my $bindPassword = $sssd->bindPassword();
+        my $baseDN = $sssd->baseDN();
+        # Piler is case sensitive for ldap filter
+        my $UPbaseDN = $baseDN ;
+        $UPbaseDN =~ s/dc=/DC=/g;
+        my $bindDN = $sssd->bindDN();
+        my $port = $sssd->port();
+        my $userDN = $sssd->userDN();
+        my $host = $sssd->host();
+        my $ldap = $sssd->isLdap();
 
-$config['ENABLE_IMAP_AUTH'] = 1;
+        if ($sssd->isLdap()) {
+            $OUT.= qq(
+\$config['ENABLE_LDAP_AUTH'] = 1;
+\$config['LDAP_HOST'] = 'ldaps://$SystemName.$DomainName';
+\$config['LDAP_HELPER_DN'] = '$bindDN';
+\$config['LDAP_HELPER_PASSWORD'] = '$bindPassword';
+\$config['LDAP_MAIL_ATTR'] = 'mail';
+\$config['LDAP_BASE_DN'] = '$baseDN';
+\$config['LDAP_ACCOUNT_OBJECTCLASS'] = 'posixAccount';
+\$config['LDAP_DISTRIBUTIONLIST_ATTR'] = 'memberUid';
+\$config['LDAP_DISTRIBUTIONLIST_OBJECTCLASS'] = 'posixGroup';
+// admin\@domain.com is admin of piler
+\$config['LDAP_ADMIN_MEMBER_DN'] = 'uid=admin,ou=People,dc=directory,dc=nh';
+// members of PilerAuditor are auditors
+\$config['LDAP_AUDITOR_MEMBER_DN'] = 'cn=PilerAuditor,ou=Groups,dc=directory,dc=nh';
+
+);
+        } elsif ($sssd->isAD()) {
+            $OUT.= qq(
+\$config['ENABLE_LDAP_AUTH'] = 1;
+\$config['LDAP_HOST'] = 'ldaps://$host';
+\$config['LDAP_HELPER_DN'] = '$bindDN';
+\$config['LDAP_HELPER_PASSWORD'] = '$bindPassword';
+\$config['LDAP_ACCOUNT_OBJECTCLASS'] = 'user';
+\$config['LDAP_MAIL_ATTR'] = 'userPrincipalName';
+\$config['LDAP_DISTRIBUTIONLIST_OBJECTCLASS'] = 'group';
+\$config['LDAP_DISTRIBUTIONLIST_ATTR'] = 'member';
+\$config['LDAP_BASE_DN'] = '$baseDN';
+// admin\@nethservertest.org is admin of piler
+\$config['LDAP_ADMIN_MEMBER_DN'] = 'CN=admin,CN=Users,$UPbaseDN';
+// members of PilerAuditor are auditors
+\$config['LDAP_AUDITOR_MEMBER_DN'] = 'CN=PilerAuditor,CN=Users,$UPbaseDN';
+);
+        }
+    }
+}
+
 $config['RESTORE_OVER_IMAP'] = 1;
 $config['IMAP_RESTORE_FOLDER_INBOX'] = 'INBOX';
 $config['IMAP_RESTORE_FOLDER_SENT'] = 'Sent';
