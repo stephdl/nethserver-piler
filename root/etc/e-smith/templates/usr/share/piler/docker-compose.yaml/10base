@@ -55,6 +55,7 @@ services:
     volumes:
       - piler_etc:/etc/piler
       - piler_var:/var/piler
+      - /usr/share/piler/configuration/ldap.conf:/etc/ldap/ldap.conf:ro
     healthcheck:
       test: curl -s smtp://localhost/
       interval: "60s"
