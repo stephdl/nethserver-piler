@@ -40,9 +40,10 @@ $memcached_server = ['memcached', 11211];
         my $ldap = $sssd->isLdap();
 
         if ($sssd->isLdap()) {
+            $host = ($host eq '127.0.0.1') ? $SystemName.'.'.$DomainName : $host;
             $OUT.= qq(
 \$config['ENABLE_LDAP_AUTH'] = 1;
-\$config['LDAP_HOST'] = 'ldaps://$SystemName.$DomainName';
+\$config['LDAP_HOST'] = 'ldaps://$host';
 \$config['LDAP_HELPER_DN'] = '$bindDN';
 \$config['LDAP_HELPER_PASSWORD'] = '$bindPassword';
 \$config['LDAP_MAIL_ATTR'] = 'mail';
