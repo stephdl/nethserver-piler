@@ -36,6 +36,11 @@ mv %SOURCE1 %{buildroot}%{_datadir}/piler/docker-compose
 > %{name}-%{version}-%{release}-filelist
 
 %post
+getent group piler >/dev/null || groupadd -r piler
+if ! id piler >/dev/null 2>&1 ; then
+    useradd -r -g piler piler
+fi
+
 %postun
 
 %clean
