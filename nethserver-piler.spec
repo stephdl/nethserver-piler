@@ -28,6 +28,15 @@ perl createlinks
 %install
 rm -rf $RPM_BUILD_ROOT
 (cd root   ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
+
+mkdir -p %{buildroot}/usr/share/cockpit/%{name}/
+mkdir -p %{buildroot}/usr/share/cockpit/nethserver/applications/
+mkdir -p %{buildroot}/usr/libexec/nethserver/api/%{name}/
+cp -a manifest.json %{buildroot}/usr/share/cockpit/%{name}/
+cp -a logo.png %{buildroot}/usr/share/cockpit/%{name}/
+cp -a %{name}.json %{buildroot}/usr/share/cockpit/nethserver/applications/
+cp -a api/* %{buildroot}/usr/libexec/nethserver/api/%{name}/
+
 rm -f %{name}-%{version}-%{release}-filelist
 mkdir -p %{buildroot}/usr/share/piler/
 mv %SOURCE1 %{buildroot}%{_datadir}/piler/docker-compose
@@ -42,6 +51,10 @@ if ! id piler >/dev/null 2>&1 ; then
 fi
 
 %postun
+if [ $1 == 0 ] ; then
+    /usr/bin/rm -f /etc/httpd/conf.d/zzz_piler.conf
+    /usr/bin/systemctl reload httpd
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT

@@ -1,0 +1,26 @@
+{
+  "id": "nethserver-piler",
+  "name": "piler",
+  "summary": "Provide the ERP/CRM piler",
+  "description": "Provide the ERP/CRM piler",
+  "url": "",
+  "homepage": "https://github.com/stephdl/nethserver-piler",
+  "provides": ["nethserver-piler"],
+  "release": {
+    "version": "_RELEASE_"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/stephdl/dev/issues"
+  },
+  "author": {
+    "name": "Stephane de Labrusse",
+    "url": "https://github.com/stephdl/nethserver-piler",
+    "email": "stephdl@de-labrusse.fr"
+  },
+  "infoapi": {
+    "path": "nethserver-piler/read"
+  },
+  "icon": "logo.png",
+  "external": true
+}
