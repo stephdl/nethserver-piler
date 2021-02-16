@@ -1,7 +1,7 @@
 Summary: nethserver-piler  is a rpm for mailpiler software
 %define name nethserver-piler
 Name: %{name}
-%define version 0.1.0
+%define version 0.1.1
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING
 
 %changelog
-* Sat fev 06 2021 stephane de Labrusse <stephdl@de-labrusse.fr>
+* Tue Feb 16 2021 stephane de Labrusse <stephdl@de-labrusse.fr>
+- First release only imap authentication is supported
+
+* Sat Feb 06 2021 stephane de Labrusse <stephdl@de-labrusse.fr>
 - initial
 - Fosdem 21 I miss you
