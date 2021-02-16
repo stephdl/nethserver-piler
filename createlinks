@@ -26,5 +26,24 @@ event_templates($event, qw(
                 dnsmasq restart
  ));
 
+$event = 'nethserver-piler-save';
+event_actions ( $event, qw (
+     initialize-default-databases 00
+     nethserver-piler-set-hostname 01
+));
+
+event_templates($event, qw(
+     /etc/shorewall/rules
+     /usr/share/piler/docker-compose.yaml
+     /etc/hosts
+     /etc/httpd/conf.d/zzz_piler.conf
+));
+
+ event_services($event, qw(
+                httpd reload
+                dnsmasq restart
+                piler restart
+ ));
+
 safe_symlink("/etc/e-smith/templates-default/template-begin-php", 
      "root/etc/e-smith/templates/var/lib/docker/volumes/piler_piler_etc/_data/config-site.php/template-begin");
