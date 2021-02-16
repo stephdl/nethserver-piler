@@ -24,6 +24,7 @@ Piler is a feature rich open source email archiving solution
 
 %build
 perl createlinks
+sed -i 's/_RELEASE_/%{version}/' %{name}.json
 
 %install
 rm -rf $RPM_BUILD_ROOT
