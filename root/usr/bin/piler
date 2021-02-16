@@ -29,12 +29,12 @@ elif [[ $1 == 'bash' ]]; then
     docker exec -ti piler_piler_1 /bin/bash
 else
     echo "The commands are :
-    piler status : retrieve the status of piler and mariadb container
-    piler bash : start a shell inside the container
-    piler restart: Restart the piler container
-    piler start: Start the piler container
-    piler stop: Stop the piler container
-    piler ps: Container information
-    piler log: Display the error log of the container
+    piler status : retrieve the status of piler and mariadb containers
+    piler bash : start a shell inside the piler container
+    piler restart: Restart the piler containers
+    piler start: Start the piler containers
+    piler stop: Stop the piler containers
+    piler ps: Container informations
+    piler log: Display the error log of the 3 containers
 "
 fi
