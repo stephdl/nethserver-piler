@@ -1,8 +1,8 @@
 {
   "id": "nethserver-piler",
   "name": "piler",
-  "summary": "Provide the ERP/CRM piler",
-  "description": "Provide the ERP/CRM piler",
+  "summary": "Provides the mail archive software piler",
+  "description": "Provides the mail archive software piler",
   "url": "",
   "homepage": "https://github.com/stephdl/nethserver-piler",
   "provides": ["nethserver-piler"],
