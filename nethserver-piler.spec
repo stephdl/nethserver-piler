@@ -68,6 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) /usr/libexec/nethserver/nethserver-piler-expand-template
 %attr(0755,root,root) /usr/bin/piler
 %attr(0755,root,root) /usr/bin/piler-import-email
+%attr(0440,root,root) /etc/sudoers.d/50_nsapi_nethserver_piler
 %doc COPYING
 
 %changelog
