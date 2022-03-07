@@ -1,7 +1,7 @@
 Summary: nethserver-piler  is a rpm for mailpiler software
 %define name nethserver-piler
 Name: %{name}
-%define version 0.1.2
+%define version 0.1.3
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -72,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING
 
 %changelog
+* Mon Mar 07 2022 stephane de labrusse <stephdl@de-labrusse.fr>
+- bump to sutoj/piler:1.3.11
+
 * Tue Feb 15 2022 stephane de labrusse <stephdl@de-labrusse.fr>
 - Sudoers file to avoid warning
 
